@@ -1,0 +1,354 @@
+buildCmd: mvn -e -X -Dmaven.test.skip=true compile
+testCmd: true
+lineLength: 4096
+skipVerification: true
+cbmcArguments:
+  # Do not generate coverage comments on generated tests.
+  java-generate-no-comments: true
+phases:
+  -
+  #Phase 0 PRETTY AND SIMPLE - Simple models, quick cover, pretty Tests, Do Not Test Private Method Directly
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 1500
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 1
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [ private ]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # Instrument the file as opposed to the function only
+      cover-only: file
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+  -
+  #Phase 1 PRETTY AND COMPLEX - Standard models, longer run time, pretty tests, Do Not Test Private Method Directly
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: false
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 2
+      # Do not test any methods that have the specified access level.
+      do-not-test-methods-with-access: [ private ]
+      # Instrument the entry point function only.
+      cover-function-only: false
+      # instrument the file as opposed to the function only
+      cover-only: file
+  -
+  #Phase 2 Simple and Private Directly
+    timeout: 180
+    cbmcArguments:
+      # Use simple models containers (ArrayList, HashMap, HashSet,...) will have a maximum size of one.
+      classpath: '/tools/cbmc/models-simple-overlay.jar:/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 1500
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: true
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 10
+      # Bound the length of input strings.
+      max-nondet-string-length: 10
+      # Add constraint that strings are printable
+      string-printable: true
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 1
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+      # If the logs contain output of the following then proceed to phase X
+    nextPhase:
+      # If the function is not analysable then do not pass onto the next phase
+      not_analyzed: null
+  -
+  #Phase 3 Complex and Private Directly
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library.
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: 3000
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Bound the length of input strings.
+      max-nondet-string-length: 30
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 3
+      # Set string input value  
+      string-input-value: ["foo", "Bar", "BAZ", "1234", "a,b,c", "1", "2", "3", "a/b/c", "a'b'c"]
+  -
+  #Phase 4 EXCEPTIONS
+    timeout: 180
+    cbmcArguments:
+      # Use the standard models library.
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 30
+      # Bound the length of input strings.
+      max-nondet-string-length: 30
+      # Add constraint that strings are printable
+      string-printable: false
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: true
+      # Set an upper bound on loop unwinding.
+  -
+    #PHASE 5 Big numbers and less contraints on inputs 
+    timeout: 300
+    cbmcArguments:
+      # Use the standard models library.
+      classpath: '/tools/cbmc/models.jar:.'
+      # Set a limit on the number of instructions that can be generated as part of a test trace.
+      depth: false
+      # never initialize reference-typed parameter to the entry point with null
+      java-assume-inputs-non-null: false
+      # Constrain the size of arrays created in the analyzed code.
+      java-max-vla-length: 10000
+      # Maximum allowed length for an array passed as test input.
+      max-nondet-array-length: 100
+      # Bound the length of input strings.
+      max-nondet-string-length: 100
+      # Add constraint that strings are printable
+      string-printable: false
+      # Make implicit runtime exceptions explicit.
+      throw-runtime-exceptions: false
+      # Set an upper bound on loop unwinding.
+      unwind: 6
+units:
+# Target TGF: 282.221626984
+#  >methods=38
+#  >complexity=1055
+#  >construction=28.4285714286
+#  >dependency=11.7706349206
+ - target:
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TableEnv.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TableEnv.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TableConfig.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TableConfig.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/DataTable.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/DataTable.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/DataTable$DataTableStoreList.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/DataTable.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/PojoRelDataTypeValue.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/PojoRelDataTypeValue.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TableEnv$TableExecutionPlan.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TableEnv.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/PojoTypeConverter.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/PojoTypeConverter.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TableDataContexImpl.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TableDataContexImpl.java
+# Target TGF: 773.0
+#  >methods=36
+#  >complexity=773
+#  >construction=25.0
+#  >dependency=25.0
+ - target:
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/SimpleCharStream.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/SimpleCharStream.java
+# Target TGF: 326.030769231
+#  >methods=10
+#  >complexity=452
+#  >construction=15.6857142857
+#  >dependency=1.64835164835
+ - target:
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/TypeInferenceUtil.class
+     sourceDir: marble-table-hive/src/main/java
+     sourceFile: org/apache/calcite/adapter/hive/TypeInferenceUtil.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TypeConvertUtil.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TypeConvertUtil.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/RelDataTypeHolder.class
+     sourceDir: marble-table-hive/src/main/java
+     sourceFile: org/apache/calcite/adapter/hive/RelDataTypeHolder.java
+# Target TGF: 1011.0
+#  >methods=22
+#  >complexity=253
+#  >construction=90.0
+#  >dependency=4.83333333333
+ - target:
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TypeConvertUtil.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TypeConvertUtil.java
+# Target TGF: 1494.0
+#  >methods=6
+#  >complexity=166
+#  >construction=18.0
+#  >dependency=2.0
+ - target:
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/TokenMgrError.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/TokenMgrError.java
+# Target TGF: 276.0
+#  >methods=5
+#  >complexity=276
+#  >construction=2.0
+#  >dependency=2.0
+ - target:
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/ParseException.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/ParseException.java
+# Target TGF: 846.0
+#  >methods=8
+#  >complexity=224
+#  >construction=45.0
+#  >dependency=2.5
+ - target:
+   - dir: benchmark/benchmark-common/target/classes
+     file: com/u51/marble/BenchMarkUtil.class
+     sourceDir: benchmark/benchmark-common/src/main/java
+     sourceFile: com/u51/marble/BenchMarkUtil.java
+# Target TGF: 198.25
+#  >methods=134
+#  >complexity=517
+#  >construction=5.25
+#  >dependency=9.0
+ - target:
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/SimpleCharStream.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/SimpleCharStream.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/TokenMgrError.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/TokenMgrError.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/Token.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/Token.java
+# Target TGF: 425.46547619
+#  >methods=9
+#  >complexity=581
+#  >construction=18.8928571429
+#  >dependency=3.03333333333
+ - target:
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/PojoTypeConverter.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/PojoTypeConverter.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/PojoRelDataTypeValue.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/PojoRelDataTypeValue.java
+   - dir: marble-table/target/classes
+     file: org/apache/calcite/table/TypeConvertUtil.class
+     sourceDir: marble-table/src/main/java
+     sourceFile: org/apache/calcite/table/TypeConvertUtil.java
+# Target TGF: 4461.17462481
+#  >methods=2435
+#  >complexity=17693
+#  >construction=54.0312030075
+#  >dependency=82.8218253968
+ - target:
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/SimpleCharStream.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/SimpleCharStream.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/ParseException.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/ParseException.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl$LookaheadSuccess.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/Token.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/Token.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlOperatorTable.class
+     sourceDir: marble-table-hive/src/main/java
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlOperatorTable.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl$JJCalls.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
+   - dir: marble-table-hive/target/classes
+     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl$1.class
+     sourceDir: marble-table-hive/target/generated-sources/javacc
+     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
