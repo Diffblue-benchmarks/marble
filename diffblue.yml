@@ -194,34 +194,6 @@ units:
      file: org/apache/calcite/table/TableDataContexImpl.class
      sourceDir: marble-table/src/main/java
      sourceFile: org/apache/calcite/table/TableDataContexImpl.java
-# Target TGF: 773.0
-#  >methods=36
-#  >complexity=773
-#  >construction=25.0
-#  >dependency=25.0
- - target:
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/SimpleCharStream.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/SimpleCharStream.java
-# Target TGF: 326.030769231
-#  >methods=10
-#  >complexity=452
-#  >construction=15.6857142857
-#  >dependency=1.64835164835
- - target:
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/TypeInferenceUtil.class
-     sourceDir: marble-table-hive/src/main/java
-     sourceFile: org/apache/calcite/adapter/hive/TypeInferenceUtil.java
-   - dir: marble-table/target/classes
-     file: org/apache/calcite/table/TypeConvertUtil.class
-     sourceDir: marble-table/src/main/java
-     sourceFile: org/apache/calcite/table/TypeConvertUtil.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/RelDataTypeHolder.class
-     sourceDir: marble-table-hive/src/main/java
-     sourceFile: org/apache/calcite/adapter/hive/RelDataTypeHolder.java
 # Target TGF: 1011.0
 #  >methods=22
 #  >complexity=253
@@ -232,26 +204,6 @@ units:
      file: org/apache/calcite/table/TypeConvertUtil.class
      sourceDir: marble-table/src/main/java
      sourceFile: org/apache/calcite/table/TypeConvertUtil.java
-# Target TGF: 1494.0
-#  >methods=6
-#  >complexity=166
-#  >construction=18.0
-#  >dependency=2.0
- - target:
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/TokenMgrError.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/TokenMgrError.java
-# Target TGF: 276.0
-#  >methods=5
-#  >complexity=276
-#  >construction=2.0
-#  >dependency=2.0
- - target:
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/ParseException.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/ParseException.java
 # Target TGF: 846.0
 #  >methods=8
 #  >complexity=224
@@ -262,32 +214,6 @@ units:
      file: com/u51/marble/BenchMarkUtil.class
      sourceDir: benchmark/benchmark-common/src/main/java
      sourceFile: com/u51/marble/BenchMarkUtil.java
-# Target TGF: 198.25
-#  >methods=134
-#  >complexity=517
-#  >construction=5.25
-#  >dependency=9.0
- - target:
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/SimpleCharStream.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/SimpleCharStream.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/TokenMgrError.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/TokenMgrError.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/Token.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/Token.java
 # Target TGF: 425.46547619
 #  >methods=9
 #  >complexity=581
@@ -306,49 +232,3 @@ units:
      file: org/apache/calcite/table/TypeConvertUtil.class
      sourceDir: marble-table/src/main/java
      sourceFile: org/apache/calcite/table/TypeConvertUtil.java
-# Target TGF: 4461.17462481
-#  >methods=2435
-#  >complexity=17693
-#  >construction=54.0312030075
-#  >dependency=82.8218253968
- - target:
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/SimpleCharStream.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/SimpleCharStream.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/ParseException.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/ParseException.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplTokenManager.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl$LookaheadSuccess.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/Token.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/Token.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlOperatorTable.class
-     sourceDir: marble-table-hive/src/main/java
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlOperatorTable.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImplConstants.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl$JJCalls.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
-   - dir: marble-table-hive/target/classes
-     file: org/apache/calcite/adapter/hive/HiveSqlParserImpl$1.class
-     sourceDir: marble-table-hive/target/generated-sources/javacc
-     sourceFile: org/apache/calcite/adapter/hive/HiveSqlParserImpl.java
